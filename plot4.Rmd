@@ -1,0 +1,33 @@
+---
+title: "exploritory data analysis project 1"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+dataFile <- "C:/Users/gilli/Desktop/coursera/household_power.txt"
+rawdata <- read.table(dataFile, header=TRUE, sep=";", stringsAsFactors=FALSE, dec=".")
+modifieddata <- rawdata[rawdata$Date %in% c("1/2/2007","2/2/2007") ,]
+
+datetime <- strptime(paste(modifieddata$Date, modifieddata$Time, sep=" "), "%d/%m/%Y %H:%M:%S") 
+GlobalActivePower <- as.numeric(modifieddata$Global_active_power)
+GlobalReactivePower <- as.numeric(modifieddata$Global_reactive_power)
+submetering1 <- as.numeric(modifieddata$Sub_metering_1)
+submetering2 <- as.numeric(modifieddata$Sub_metering_2)
+submetering3 <- as.numeric(modifieddata$Sub_metering_3)
+voltage <- as.numeric(modifieddata$Voltage)
+
+
+png("plot4.png", width=480, height=480)
+par(mfrow = c(2, 2)) 
+plot(datetime, GlobalActivePower, type="l", xlab="", ylab="Global Active Power", cex=0.2)
+plot(datetime, voltage, type="l", xlab="datetime", ylab="Voltage")
+plot(datetime, submetering1, type="l", ylab="Energy Submetering", xlab="")
+lines(datetime, submetering2, type="l", col="red")
+lines(datetime, submetering3, type="l", col="blue")
+legend("topright", c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), lty=, lwd=2.5, col=c("black", "red", "blue"), bty="o")
+plot(datetime, GlobalReactivePower, type="l", xlab="datetime", ylab="Global_reactive_power")
+
+```
+

@@ -1,0 +1,19 @@
+---
+title: "exploritory data analysis project 1"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+dataFile <- "C:/Users/gilli/Desktop/coursera/household_power.txt"
+rawdata <- read.table(dataFile, header=TRUE, sep=";", stringsAsFactors=FALSE, dec=".")
+modifieddata <- rawdata[rawdata$Date %in% c("1/2/2007","2/2/2007") ,]
+
+GlobalActivePower <- as.numeric(modifieddata$Global_active_power)
+png("plot1.png", width=480, height=480)
+hist(GlobalActivePower, main="Global Active Power", xlab="Global Active Power(kilowatts)", col = "Red") 
+dev.off()
+
+```
+
